@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  - var pen=[{pen1:"ballpen",pen2:"2",pen_cost:20},{pen1:"jallpen",pen2:"4",pen_cost:20},{pen1:"blue pen",pen2:"3",pen_cost:30}]
+  div(class="container-fluid")
+    div(class="row")
+        each i,index in pen
+            div(class="col-sm-2" onclick =`buy(${index})`) #{i.pen1}, #{i.pen2}, #{i.pen_cost}
+            script.
+                function buy(a)
+                {
+                    alert(`You purchased Item ${a+1}`)
+                }
