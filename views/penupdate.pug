@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  h1= title
+
+  - let penid = toShow._id
+  - let pen_type = toShow.pen_type
+  - let pencost = toShow.cost
+  - let pensize = toShow.size
+
+  div.row(class='mb-2')
+    div.mr-1 ID is
+    div #{penid}
+
+  - let actionid = "/resource/pens/" + penid
+  form(id='penForm', action=actionid, method="PUT")
+    div.form-group
+      label.penAttr(for='pen_type') pen type
+      input#pen_type(type='text', name='pen_type', value=pen_type)
+    div.form-group
+      label.penAttr(for='size') pen size
+      input#size(type='text', name='size', value=pensize)
+    div.form-group
+      label.penAttr(for='cost') pen cost
+      input#cost(type='number', name='cost', value=pencost)
+    input(type="submit")
+
+  script.
+    document.forms['penForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Update succeeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Update failed " + error)
+      });
+    });

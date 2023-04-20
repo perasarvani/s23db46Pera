@@ -1,0 +1,22 @@
+extends layout
+block content
+  h1= title
+  - let penid = toShow._id
+  - let pen1 = toShow.pen1
+  - let pen2 = toShow.pen2
+  - let pen_cost  = toShow.pen_cost
+  div
+    div.row
+        div(class='penAttr mr-3') pen ID is:
+        div #{penid}
+    div.row
+        div(class='penAttr mr-3') pen Type is:
+        div #{pen1}
+    div.row
+        div(class='penAttr mr-3') pen Size is:
+        div #{pen2}
+    div.row
+        div(class='penAttr mr-3') pen Cost is:
+        div #{pen_cost}
+
+
