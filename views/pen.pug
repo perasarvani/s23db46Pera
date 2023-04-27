@@ -1,16 +1,22 @@
-extends layout
-
 block content
+  - let pens = results
   h1= title
-  - var items=results
-  div(class="container-fluid")
-    div(class="row")
-        each i,index in items
-            div(class="col-sm-2" onclick =`buy(${index})`) #{i.pen1}, #{i.pen2}, #{i.pen_cost}
-            script.
-                function buy(a)
-                {
-                    alert(`You purchased Item ${a+1}`)
-                }
+  - let create = `dispatch(\"/pen/create\")`
+  button.btn(class="btn-info", onclick=create) Add new pen
 
-                //- [{pen1:"ballpen",pen2:"2",pen_cost:20},{pen1:"jallpen",pen2:"4",pen_cost:20},{pen1:"blue pen",pen2:"3",pen_cost:30}]
+  div(class="container-fluid")
+    div(class="row m-1")
+      each pen in pens
+        - let destination = `dispatch(\"/pen/update?id=${pen._id}\")`
+        - let detail = `dispatch(\"/pen/detail/?id=${pen._id}")`
+        - let deletepen = `dispatch(\"/pen/delete/?id=${pen._id}")`      
+        div(class="row-sm-2", class="m-1") 
+          | #{pen.pen_type} (#{pen.pencost}) is #{pen.pensize}
+          button.btn(class="btn-primary ml-1", onclick=destination) Update
+          button.btn(class="btn-success", onclick=detail) Details
+          button.btn(class="btn-dark", onclick=deletepen) Delete
+
+  script.
+    function dispatch(path){
+      window.location.href = path
+    }   
